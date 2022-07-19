@@ -3,8 +3,9 @@
     <wlExplorer ref="wl-explorer-cpt" :header-dropdown="headerHandle" :upload-options="uploadOptions"
       :columns="file_table_columns" :all-path="all_folder_list" :is-folder-fn="isFolderFn" :folderType="rource_type"
       :data="file_table_data" :props="explorer_prop" size="default" @handleFolder="handleFolder" @upload="fileUpload"
-      @download="download" @search="fileSearch" @del="fileDel" @preview="preview"
-      @closeFade="closeOtherLayoutFade(fade)" :menuList="menuList" @rename="rename">
+      @download="download" @search="fileSearch" @del="fileDel" @preview="preview" :uploadRegFuc="uploadRegFuction"
+      @uploadBefore="uploadBeforeFile" :uploadReg="true" @closeFade="closeOtherLayoutFade(fade)" :menuList="menuList"
+      @rename="rename">
       <!-- 操作文件夹滑入区 -->
       <fadeIn v-show="fade.folder">
         <h3 class="edit-header">
@@ -44,6 +45,7 @@ import {
   getAllFoldersApi, // 4获取全部文件夹
   delFileApi, // 6删除文件|文件夹
 } from "@/api"; // 导入接口
+import { ElMessage } from 'element-plus';
 const apiok = 200;
 
 export default {
@@ -213,6 +215,10 @@ export default {
         }
       });
     },
+    uploadBeforeFile(file, fileList, fileItem) {
+      console.log(file, fileList, fileItem);
+      fileList.splice(fileList.findIndex(v => v.name == file.name), 1)
+    },
     /**
      * 编辑文件夹
      * act:Object 当前选中文件夹
@@ -230,6 +236,12 @@ export default {
       }
       this.child_act_saved = act;
       this.folder_form = { ...act };
+    },
+    uploadRegFuction(file) {
+      if (file.size > 10 * 1024 * 1024) {
+        ElMessage.error("文件大小不能超过10MB");
+        return false;
+      }
     },
     // 提交文件夹表单
     submitFolderFrom(formName) {

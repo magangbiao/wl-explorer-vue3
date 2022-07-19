@@ -85,8 +85,8 @@ export default {
       this.$refs.upload.submit();
     },
     // 上传前验证
-    beforeUpload(file) {
-      this.$emit('beforeUpload', file);
+    beforeUpload(file, fileList) {
+      this.$emit('beforeUpload', file, fileList );
       // 不校验
       if (!this.reg) return true;
       // 自定义校验
@@ -104,6 +104,9 @@ export default {
     handleExceed() {
       this.$message.error("超出文件上传个数限制，最大上传个数为：1！");
     },
+    clearFileList() {
+      state.fileList = [];
+    }
   },
   computed: {
     // 上传参数

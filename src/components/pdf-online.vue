@@ -1,9 +1,6 @@
 <template>
   <!-- 单独的pdf预览 相对于视窗 -->
   <div class="m-pdf-box">
-    <h3 class="video-player-h3">
-      <i class="el-icon-circle-close video-player-icon" @click="closePdf('close')"></i>
-    </h3>
     <iframe :src="embedPdfUrl" class="pdf-box">
       <!-- 您的浏览器不支持预览pdf文件，请下载并查看 <a href="/index.pdf">Download PDF</a> -->
     </iframe>

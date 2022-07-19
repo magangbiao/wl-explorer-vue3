@@ -166,8 +166,9 @@
     <!-- 文件预览区 -->
     <template v-if="usePreview">
       <el-dialog v-model="layout.view" title="文件预览" width="70%" draggable>
-        <file-view v-show="layout.view" :key="previewKey" ref="file-view" class="file-view-components"
-          :previewType="previewType" :previewOptions="previewOptions" @close="layout.view = false"></file-view>
+        <file-view v-show="layout.view" v-if="layout.view" :key="previewKey" ref="file-view"
+          class="file-view-components" :previewType="previewType" :previewOptions="previewOptions"
+          @close="layout.view = false"></file-view>
         <template #footer>
           <span class="dialog-footer">
             <el-button type="primary" @click="layout.view = false">关闭</el-button>
@@ -402,9 +403,11 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
+        showCancelButton: true,
       })
         .then(() => {
-          this.$emit("del", this.file_checked_data);
+          const deleteData = { data: { _id: this.file_checked_data.map(v => v._id) } };
+          this.$emit("deleteItem", deleteData);
         })
         .catch(() => {
           ElMessage({
@@ -657,6 +660,10 @@ export default {
     handleUpload() {
       this.$refs["upload-item"].toUpload();
     },
+    // 上传成功回调
+    handleClearFileList() {
+      this.$refs["upload-item"].clearFileList();
+    },
     // 文件上传成功回调
     uploadSuccess(res) {
       this.$emit("uploadSuccess", res);
@@ -681,9 +688,8 @@ export default {
       _act.data.push(_res_data);
     },
     // 文件上传前回调
-    uploadBefore(file) {
-      this.$emit("uploadBefore", file, this.file);
-
+    uploadBefore(file, fileList) {
+      this.$emit("uploadBefore", file, fileList, this.file);
     },
     // 文件上传失败回调
     uploadError(err) {
@@ -770,7 +776,7 @@ export default {
     },
     // 打开预览组件
     showPreview() {
-      state.previewKey = new Date().getTime();
+      // this.previewKey = new Date().getTime();
       this.layout.view = true;
     },
     // 处理数据变动

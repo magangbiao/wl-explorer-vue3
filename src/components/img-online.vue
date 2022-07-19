@@ -1,7 +1,6 @@
 <template>
   <div class="img-pre-box" @click="imgClose('close')">
-    <!-- <pic-zoom :url="imgUrl"></pic-zoom> -->
-    <img class="u-img-pre" :src="imgUrl" alt="图片资料">
+    <el-image class="u-img-pre" alt="图片资料" :src="imgUrl" fit="contain" />
   </div>
 </template>
 
@@ -52,9 +51,9 @@ export default {
   background-color: #fff;
   text-align: center;
 
-  > .u-img-pre {
-    max-width: 100%;
-    max-height: 100%;
+  >.u-img-pre {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>
