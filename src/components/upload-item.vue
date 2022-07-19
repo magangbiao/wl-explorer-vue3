@@ -105,7 +105,8 @@ export default {
       this.$message.error("超出文件上传个数限制，最大上传个数为：1！");
     },
     clearFileList() {
-      state.fileList = [];
+      this.$refs.upload.clearFiles();
+      this.fileList = [];
     }
   },
   computed: {

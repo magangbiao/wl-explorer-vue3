@@ -70,14 +70,14 @@
           </template>
         </el-input>
       </el-form-item>
-      <el-form-item class="file-handle-box">
+      <!-- <el-form-item class="file-handle-box">
         <i class="iconfont icon-wl-left file-path-handle" :class="{ 'u-disabled': pathIsStart }"
           @click="pathBtn('prv')"></i>
         <i class="iconfont icon-wl-right file-path-handle" :class="{ 'u-disabled': pathIsEnd }"
           @click="pathBtn('next')"></i>
         <i class="iconfont icon-wl-up file-path-handle" :class="{ 'u-disabled': path.level === 1 }"
           @click="pathBtn('top')"></i>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <!-- 主内容区 -->
     <el-scrollbar class="wl-main-scroll">
@@ -188,14 +188,14 @@
     </el-dialog>
     <!-- 文件上传区 -->
     <template v-if="useUpload">
-      <fade-in v-show="layout.upload">
+      <fade-in v-if="layout.upload" :key="uploadFileKey">
         <h3 class="edit-header">上传文件</h3>
         <el-scrollbar class="scroll">
           <el-form :size="size" ref="template_form" label-position="top" class="template_form rule-form">
-            <el-form-item label="文件路径">
+            <!-- <el-form-item label="文件路径">
               <wlTreeSelect class="u-full" :size="size" :data="tree_path" :props="selfMoveProps"
                 :nodeKey="selfProps.pathId" v-model="upload_selected" @change="uploadPathChange"></wlTreeSelect>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="导入文件">
               <uploadItem ref="upload-item" :size="size" :reg="uploadReg" :url="uploadUrl" :limit="uploadLimit"
                 :regFuc="uploadRegFuc" :options="uploadOptions" :headers="uploadHeaders" @beforeUpload="uploadBefore"
@@ -273,7 +273,8 @@ export default {
         parentPathId: null,
         isCurrentFolder: true,
       }, // 上传提交操作抛出的信息
-      previewKey: ""
+      previewKey: "",
+      uploadFileKey: ""
     };
   },
   props: {
@@ -626,6 +627,7 @@ export default {
     },
     // 显示上传界面
     showUpload() {
+      this.uploadFileKey = new Date().getTime();
       this.upload_selected = this.file.id;
       this.uoload_data = {
         parentPathId: this.file.pid,
@@ -937,4 +939,6 @@ export default {
 @import "./css/index.css";
 @import "./css/clear.css";
 @import "./icons/iconfont.css";
+
+
 </style>

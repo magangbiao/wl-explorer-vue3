@@ -242,3 +242,8 @@
   color: #dedada;
   cursor: no-drop;
 }
+
+.wl-header-file .el-form-item--default .el-form-item__label {
+  height: 40px;
+  line-height: 40px;
+}
