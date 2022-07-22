@@ -165,7 +165,7 @@
     <slot></slot>
     <!-- 文件预览区 -->
     <template v-if="usePreview">
-      <el-dialog v-model="layout.view" title="文件预览" width="70%" draggable>
+      <el-dialog v-model="layout.view" top="5vh" title="文件预览" width="70%" draggable>
         <file-view v-show="layout.view" v-if="layout.view" :key="previewKey" ref="file-view"
           class="file-view-components" :previewType="previewType" :previewOptions="previewOptions"
           @close="layout.view = false"></file-view>
@@ -939,6 +939,4 @@ export default {
 @import "./css/index.css";
 @import "./css/clear.css";
 @import "./icons/iconfont.css";
-
-
 </style>
